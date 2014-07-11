@@ -1,0 +1,1 @@
+Class Alert is a script that checks if classes at UCLA go from closed to open. If it does, it will alert the user so that they can enroll in the class.
