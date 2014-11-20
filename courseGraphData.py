@@ -36,7 +36,7 @@ def createCourse(url):
 		courseType = courseTitle.get_text()
 		courseType = "".join(courseType.split())
 		if courseType == "LEC":
-			theLec = {'prof' : '', 'enrolled' : [], 'enrolledCapacity' : ''}
+			theLec = {'title' : title, 'prof' : '', 'enrolled' : [], 'enrolledCapacity' : ''}
 			lectures.append(theLec)
 			lectureCounter.append(counter)
 			counter += 1
