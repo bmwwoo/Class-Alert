@@ -13,12 +13,26 @@ def CourseLinks():
 
 
 keys = imp.load_source('module.name', './APIKeys/APIKeys.py')
-
-client = pymongo.MongoClient(keys.MONGOKEY())
-db = client.get_default_database()
-
-
+#client = pymongo.MongoClient(keys.MONGOKEY())
+#db = client.get_default_database()
 
 
 allCourseLinks = CourseLinks()
-courseGraphData.createCourse("http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel=15W&subareasel=PHYSICS&idxcrs=0001C+++")
+courseDict = {}
+classes = []
+for subject in allCourseLinks['Computer Science']:
+	classes.append(courseGraphData.createCourse(subject))
+courseDict['Computer Science'] = classes
+#pprint(courseDict)
+for team in courseDict['Computer Science']:
+	for a in team:
+		for b in a:
+			pprint(b)
+			'''for c in b:
+				for metaData in c:
+					#print "Title:\t%s\nEnrolled Capacity:\t%d\nEnrolled Now:\t%d" % (metaData['title'], metaData['enrolledCapacity'], metaData['enrolled'])
+'''
+pprint( courseDict['Computer Science'][2]['COM SCI 32 INTRO TO COM SCI 2'][0]['enrolled'] )
+#	print "Title:\t%s\nEnrolled Capacity:\t%d\nEnrolled Now\t%d" % (team['title'], team['enrolledCapacity'], team['enrolled'])
+
+#client.close()
