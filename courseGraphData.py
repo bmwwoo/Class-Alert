@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import urllib2
 
 
+
 def findTitle(soup):
 #finds title of course since it is always the second coursehead
 	isTitle = False
@@ -54,12 +55,11 @@ def createCourse(url):
 	i = 0
 	for lec in lectures:
 		counter = lectureCounter[i]
-		lec['enrolled'] = int(Enrolled[counter])
+		lec['enrolled'].append(int(Enrolled[counter]))
 		lec['enrolledCapacity'] = int(EnrolledCapacity[counter])
 		lec['professor'] = professorList[i]
 		i += 1
 
 	courseDict[title] = lectures #course should be a global? probably returns just lectures and course should be what it returns into
-	
 	#print json.dumps(courseDict, sort_keys=True, indent=4, separators=(',', ': '))
 	return courseDict
