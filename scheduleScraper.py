@@ -1,3 +1,4 @@
+import json
 from bs4 import BeautifulSoup
 import urllib2
 
@@ -22,8 +23,7 @@ def linksOnPage(url):
 
 
 homeURL = "http://www.registrar.ucla.edu/schedule/schedulehome.aspx"
-#url = "http://www.registrar.ucla.edu/schedule/crsredir.aspx?termsel=14F&subareasel=CH+ENGR"
-
+TERM = "15W"
 #courseLinks = {"hi" : ["wee", "qua"], "raaa" : ["aar"]}
 
 
@@ -41,14 +41,16 @@ for link in soup.find_all("option"):
 		continue
 	subjectCode = formatLink(subjectCode)
 	#everything is unicode
-	term = "15W"
-	subjectLink = "http://www.registrar.ucla.edu/schedule/crsredir.aspx?termsel=" + term + "&subareasel=" + subjectCode 
+	
+	subjectLink = "http://www.registrar.ucla.edu/schedule/crsredir.aspx?termsel=" + TERM + "&subareasel=" + subjectCode 
+	print subjectLink
 	classLinks = linksOnPage(subjectLink)
 	courseLinks[subject] = classLinks
 
-
-for key, value in courseLinks.items()[0::]:
+print json.dumps(courseLinks, sort_keys=True, indent=4, separators=(',', ': '))
+'''for key, value in courseLinks.items()[0::]:
 	print key 
 	for x in value:
 		print x
 
+'''
