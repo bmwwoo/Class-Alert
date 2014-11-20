@@ -41,8 +41,8 @@ for link in soup.find_all("option"):
 		continue
 	subjectCode = formatLink(subjectCode)
 	#everything is unicode
-	
-	subjectLink = "http://www.registrar.ucla.edu/schedule/crsredir.aspx?termsel=14F&subareasel=" + subjectCode 
+	term = "15W"
+	subjectLink = "http://www.registrar.ucla.edu/schedule/crsredir.aspx?termsel=" + term + "&subareasel=" + subjectCode 
 	classLinks = linksOnPage(subjectLink)
 	courseLinks[subject] = classLinks
 
