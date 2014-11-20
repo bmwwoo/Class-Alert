@@ -36,7 +36,7 @@ def createCourse(url):
 		courseType = courseTitle.get_text()
 		courseType = "".join(courseType.split())
 		if courseType == "LEC":
-			theLec = {'title' : title, 'prof' : '', 'enrolled' : [], 'enrolledCapacity' : ''}
+			theLec = {'title' : title, 'professor' : '', 'enrolled' : [], 'enrolledCapacity' : ''}
 			lectures.append(theLec)
 			lectureCounter.append(counter)
 			counter += 1
@@ -45,12 +45,18 @@ def createCourse(url):
 
 	Enrolled = findData(soup, "dgdClassDataEnrollTotal")
 	EnrolledCapacity = findData(soup, "dgdClassDataEnrollCap")
+	professorList = []
+	for lec in soup.find_all("span", {"class" : "fachead"}):
+		staff = lec.get_text()
+		staff = " ".join(staff.split())
+		professorList.append(staff)
 	#assignment of all data to the list of classes	
 	i = 0
 	for lec in lectures:
 		counter = lectureCounter[i]
 		lec['enrolled'] = int(Enrolled[counter])
 		lec['enrolledCapacity'] = int(EnrolledCapacity[counter])
+		lec['professor'] = professorList[i]
 		i += 1
 
 	courseDict[title] = lectures #course should be a global? probably returns just lectures and course should be what it returns into
