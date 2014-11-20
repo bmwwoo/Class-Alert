@@ -26,29 +26,34 @@ def createCourse(url):
 	response = urllib2.urlopen(url)
 	html = response.read()
 	soup = BeautifulSoup(html)
-	#soup = BeautifulSoup(open("physics.html"))
 	courseDict = {}
 	title = findTitle(soup)
 	lectures = []
+	counter = 0
+	lectureCounter = []
 	#creates nubmer of lectures and discussions
 	for courseTitle in soup.find_all("td", {"class" : "dgdClassDataActType"}):
 		courseType = courseTitle.get_text()
 		courseType = "".join(courseType.split())
 		if courseType == "LEC":
-			theLec = {'title' : title, 'prof' : '', 'enrolled' : [], 'enrolledCapacity' : ''}
+			theLec = {'prof' : '', 'enrolled' : [], 'enrolledCapacity' : ''}
 			lectures.append(theLec)
-	
+			lectureCounter.append(counter)
+			counter += 1
+		if courseType == "DIS":
+			counter += 1
+
 	Enrolled = findData(soup, "dgdClassDataEnrollTotal")
 	EnrolledCapacity = findData(soup, "dgdClassDataEnrollCap")
 	#assignment of all data to the list of classes	
 	i = 0
 	for lec in lectures:
-		lec['enrolled'] = int(Enrolled[i])
-		lec['enrolledCapacity'] = int(EnrolledCapacity[i])
+		counter = lectureCounter[i]
+		lec['enrolled'] = int(Enrolled[counter])
+		lec['enrolledCapacity'] = int(EnrolledCapacity[counter])
 		i += 1
-	i = 0
 
 	courseDict[title] = lectures #course should be a global? probably returns just lectures and course should be what it returns into
 	
-	print json.dumps(courseDict, sort_keys=True, indent=4, separators=(',', ': '))
+	#print json.dumps(courseDict, sort_keys=True, indent=4, separators=(',', ': '))
 	return courseDict
